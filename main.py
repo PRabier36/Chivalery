@@ -27,6 +27,8 @@ class Main:
     menu = pygame_menu.Menu( 500, 300, 'Welcome',theme=pygame_menu.themes.THEME_BLUE)
 
 
+
+
     menu.add.button('Play', start_the_game)
     menu.add.button('Setting', start_the_game)
     menu.add.button('credits', start_the_game)
