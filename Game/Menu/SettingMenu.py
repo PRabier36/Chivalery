@@ -3,3 +3,5 @@ from ..Config.config import *
 
 
 class SettingMenu:
+
+    pass
