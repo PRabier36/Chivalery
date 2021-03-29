@@ -1,67 +1,35 @@
-#main du projet Chivalery
+# main du projet Chivalery
 import pygame
-from pygame.locals import *
-from Game.Config.config import *
-from Game.Menu.menu import Menu
+import pygame_menu
+import config
 
-GAMEVERSION = "0.0.1-initial"
-WINDOW_TITLE = "Chivalery: Knight's School"
+pygame.init()
+running = True
+Version = "0.0.1-Alpha"
+WinTitle = "Chivalry: Knight School {}".format(Version)
+system_Font = pygame.font.SysFont("Harrington", 40)
 
-class Application:
+font = pygame_menu.font.FONT_NEVIS
 
-    global version
+surface = pygame.display.set_mode((1080, 720))
+background = pygame.image.load('./Game/Template/chivalry.jpg')
 
-    def __init__(self):
-        pygame.init()
-        pygame.display.set_caption(WINDOW_TITLE)
-        self.background_image = pygame.image.load(Background_Img)
-        self.fenetre = pygame.display.set_mode((LARGEUR_FENETRE, HAUTEUR_FENETRE))
-        # mettre ici init du groupe d'affichage
-        self.groupeGlobal = pygame.sprite.Group()
-        self.statut = True
+class Main:
 
-    def _initialiser(self):
-        try:
-            self.ecran.detruire()
-            self.groupeGlobal.empty()
-        except AttributeError:
-            pass
+    def set_difficulty(value, difficulty):
+        # Do the job here !
+        pass
 
-    def menu(self):
-        self._initialiser()
-        self.ecran = Menu(self,self.groupeGlobal)
+    def start_the_game():
+        # Do the job here !
+        pass
 
-    def quitter(self):
-        self.statut = False
-
-    def partie(self):
-        self._initialiser()
-        self.ecran = Partie(self, self.fenetre, self.groupeGlobal)
+    menu = pygame_menu.Menu( 500, 300, 'Welcome',theme=pygame_menu.themes.THEME_BLUE)
 
 
-    def update(self):
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                self.quitter()
-            elif event.type = KEYDOWN:
-                if event.key == K_ESCAPE:
-                    self.menu()
+    menu.add.button('Play', start_the_game)
+    menu.add.button('Setting', start_the_game)
+    menu.add.button('credits', start_the_game)
+    menu.add.button('Quit', pygame_menu.events.EXIT)
 
-        self.fenetre.blit(self.background_image,(0,0))
-        self.ecran.update(events)
-        self.groupeGlobal.update()
-        self.groupeGlobal.draw(self.fenetre)
-        pygame.display.update()
-app = Application()
-app.menu()
-clock = pygame.time.Clock()
-direction = None
-
-
-    while app.statut:
-        app.update()
-        clock.tick(120)
-        fps = clock.get_fps()
-        print(fps)
-    pygame.quit()
+    menu.mainloop(surface)

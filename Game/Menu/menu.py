@@ -1,5 +1,4 @@
-import pygame
-from Game.Config.config import *
+from config import *
 
 class Menu:
     """gestion du menu"""
