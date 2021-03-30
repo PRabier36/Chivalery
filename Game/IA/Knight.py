@@ -1,6 +1,6 @@
 # combat
-from model.Knight import Knight
-from model.KnightClasse import KnightClasse
+from Game.Model.Knight import Knight
+from Game.Model.KnightClasse import KnightClasse
 
 
 def fight():
