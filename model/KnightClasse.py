@@ -1,13 +1,12 @@
 class KnightClasse:
-    def __init__(self):
-        self.__id = 0
-        self.__label = 0
-        self.__speciality = 0
-        self.__modifierAttack = 0
-        self.__modifierDefense = 0
-        self.__modifierSpeciality = 0
-        self.__listSkill = 0
-
+    def __init__(self, id, label, speciality, modifierAttack, modifierDefense, modifierSpeciality, listSkill):
+        self.__id = id
+        self.__label = label
+        self.__speciality = speciality
+        self.__modifierAttack = modifierAttack
+        self.__modifierDefense = modifierDefense
+        self.__modifierSpeciality = modifierSpeciality
+        self.__listSkill = listSkill
 
     # Getter
     def get_id(self):
@@ -53,6 +52,12 @@ class KnightClasse:
     def set_listSkill(self, listSkill):
         self.__listSkill = listSkill
 
-
-    # def getClasseById(id):
-    # de
+    # Functions
+    def print(self):
+        print(
+            "id :", self.__id, "\n",
+            "label :", self.__label, "\n",
+            "speciality :", self.__speciality, "\n",
+            "modifierAttack :", self.__modifierAttack, "\n",
+            "modifierDefense :", self.__modifierDefense, "\n",
+            "modifierSpeciality :", self.__modifierSpeciality, "\n")

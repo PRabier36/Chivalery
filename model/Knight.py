@@ -1,18 +1,20 @@
 class Knight:
-    def __init__(self):
-        self.__id = 0
-        self.__name = 0
-        self.__level = 0
-        self.__classe = 0
-        self.__affinityOff = 0
-        self.__affinityDef = 0
-        self.__affinitySupp = 0
-        self.__strength = 0
-        self.__agility = 0
-        self.__constitution = 0
-        self.__mana = 0
-        self.__mastery = 0
-        self.__luck = 0
+
+    def __init__(self, id, name, level, classe, affinityOff, affinityDef, affinitySupp, strength, agility, constitution,
+                 mana, mastery, luck):
+        self.__id = id
+        self.__name = name
+        self.__level = level
+        self.__classe = classe
+        self.__affinityOff = affinityOff
+        self.__affinityDef = affinityDef
+        self.__affinitySupp = affinitySupp
+        self.__strength = strength
+        self.__agility = agility
+        self.__constitution = constitution
+        self.__mana = mana
+        self.__mastery = mastery
+        self.__luck = luck
 
     # Getter
     def get_id(self):
@@ -54,7 +56,6 @@ class Knight:
     def get_luck(self):
         return self.__luck
 
-
     # Setter
     def set_id(self, id):
         self.__id = id
@@ -95,3 +96,24 @@ class Knight:
     def set_luck(self, luck):
         self.__luck = luck
 
+    # Functions
+    def print(self):
+        print(
+            "id :", self.__id, "\n",
+            "name :", self.__name, "\n",
+            "level :", self.__level, "\n",
+            "classe :\n"
+            "   id :", self.__classe.get_id(), "\n",
+            "   label :", self.__classe.get_label(), "\n",
+            "   speciality :", self.__classe.get_speciality(), "\n",
+            "   modifierAttack :", self.__classe.get_modifierAttack(), "\n",
+            "   modifierDefense :", self.__classe.get_modifierDefense(), "\n",
+            "   modifierSpeciality :", self.__classe.get_modifierSpeciality(), "\n",
+            "affinityOff :", self.__affinityOff, "\n",
+            "affinityDef :", self.__affinityDef, "\n",
+            "affinitySupp :", self.__affinitySupp, "\n",
+            "strength :", self.__strength, "\n",
+            "agility :", self.__agility, "\n",
+            "constitution :", self.__constitution, "\n",
+            "mana :", self.__mana, "\n",
+            "mastery :", self.__mastery, "\n")
