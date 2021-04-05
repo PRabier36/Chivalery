@@ -2,6 +2,7 @@
 import pygame
 from Game.Menu.Application import *
 
+
 pygame.init()
 
 

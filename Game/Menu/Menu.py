@@ -2,6 +2,7 @@ import pygame
 import pygame_menu
 from pygame_menu import Menu
 from ..Config.config import *
+from ..Components.CustomButton import *
 
 class Menu:
     """ Création et gestion des boutons d'un menu """
@@ -11,7 +12,10 @@ class Menu:
             normal=(202, 111, 30),
             survol=(235, 152, 78),
         )
-        font = pygame.font.SysFont('Harrington', 24, bold=True)
+        font = pygame.font.SysFont('Harrington', 24, bold=True, italic=False)
+
+        
+
         # noms des menus et commandes associées
         items = (
             ('JOUER', application.jeu),

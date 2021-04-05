@@ -9,14 +9,28 @@ class Application:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(WinTitle)
-
+        font = pygame.font.SysFont('Harrington', 24, bold=True, italic=False)
         self.fond = background
 
         self.fenetre = pygame.display.set_mode((LARGEUR_FENETRE, HAUTEUR_FENETRE))
-
         # Groupe de sprites utilisé pour l'affichage
         self.groupeGlobal = pygame.sprite.Group()
         self.statut = True
+
+    def GoToPlayerCreationMenu(self):
+        # création du joueur
+        self._initialiser()
+        self.ecran = Jeu(self, self.groupeGlobal)
+
+
+    def ContinueTheLast(self):
+        pass
+
+    def loadParts(self):
+        pass
+
+    def GetBack(self):
+        pass
 
     def _initialiser(self):
         try:
@@ -46,6 +60,8 @@ class Application:
         self._initialiser()
         self.ecran = Jeu(self, self.groupeGlobal)
 
+
+
     def quitter(self):
         self.statut = False
 
@@ -57,7 +73,7 @@ class Application:
                 self.quitter()
                 return
 
-        self.fenetre.blit(background,(0, 0))
+        self.fenetre.blit(background, (0, 0))
         self.ecran.update(events)
         self.groupeGlobal.update()
         self.groupeGlobal.draw(self.fenetre)

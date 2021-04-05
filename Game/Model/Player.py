@@ -11,6 +11,7 @@ class Player:
         self.__knigntList = kninghtList
 
 
+
     # getter
     def get_id(self):
         return self.__id

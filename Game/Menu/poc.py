@@ -33,3 +33,8 @@ class Main:
     menu.add.button('Quit', pygame_menu.events.EXIT)
 
     menu.mainloop(screen)
+
+    from itertools import cycle
+    couleurs = [(0, 48, i) for i in range(0, 256, 15)]
+    couleurs.extend(sorted(couleurs[1:-1], reverse=True))
+    self._couleurTexte = cycle(couleurs)
