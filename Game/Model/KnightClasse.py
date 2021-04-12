@@ -61,3 +61,12 @@ class KnightClasse:
             "modifierAttack :", self.__modifierAttack, "\n",
             "modifierDefense :", self.__modifierDefense, "\n",
             "modifierSpeciality :", self.__modifierSpeciality, "\n")
+
+    def newKnight(self):
+        self.__id = 1
+        self.__label = "Ecuyer"
+        self.__speciality = 1
+        self.__modifierAttack = 1
+        self.__modifierDefense = 1
+        self.__modifierSpeciality = 1
+        self.__listSkill = []
