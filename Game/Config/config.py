@@ -15,11 +15,13 @@ WinTitle = "Chivalry: Knight School {}".format(Version)
 pygame.display.set_caption(WinTitle)
 
 # BtnFont = pygame.font.SysFont('Harrington', 25)
-screen = pygame.display.set_mode((LARGEUR_FENETRE, HAUTEUR_FENETRE))
+screen = pygame.Surface((LARGEUR_FENETRE, HAUTEUR_FENETRE))
 
 width = screen.get_width()
 height = screen.get_height()
 background = pygame.image.load('./Game/Template/chivalry.jpg')
+background2 = pygame.image.load('./Game/Template/intranet.jpg')
+colorBack = (83, 33, 33)
 # IMAGE_Chivalry_WALLPAPER = __images_path__.format('wallpaper.jpg')
 tempfont = pygame_menu.font.FONT_NEVIS
 

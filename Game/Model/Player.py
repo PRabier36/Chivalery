@@ -61,5 +61,6 @@ class Player:
     def set_teachingBonus(self, teachingBonus):
         self.__teachingBonus = teachingBonus
 
+
     def set_knightList(self, knigthList):
         self.__knigntList = knigthList

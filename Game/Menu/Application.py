@@ -20,7 +20,7 @@ class Application:
     def GoToPlayerCreationMenu(self):
         # création du joueur
         self._initialiser()
-        self.ecran = Jeu(self, self.groupeGlobal)
+        self.ecran = PlayerMenu(Player(10, "jean-claude", 0, 0, 10, 0, 0, 0), self, self.groupeGlobal)
 
 
     def ContinueTheLast(self):
@@ -73,7 +73,7 @@ class Application:
                 self.quitter()
                 return
 
-        self.fenetre.blit(background, (0, 0))
+        self.fenetre.blit(self.fond, (0, 0))
         self.ecran.update(events)
         self.groupeGlobal.update()
         self.groupeGlobal.draw(self.fenetre)

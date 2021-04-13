@@ -2,6 +2,7 @@ import pygame
 import pygame_menu
 from pygame_menu import Menu
 from ..Config.config import *
+from ..Components.MenuButton import *
 from .PlayerMenu import *
 
 
@@ -9,8 +10,8 @@ class Jeu:
     """ Simulacre de l'interface du jeu """
 
     def __init__(self, application, *groupes):
-        self._fenetre = screen
-        self.fond = background
+
+        application.fond.fill((0, 0, 0))
         font = pygame.font.SysFont('Harrington', 24, bold=True, italic=False)
 
         self.couleurs = dict(
@@ -24,7 +25,7 @@ class Jeu:
             ('continuer', application.ContinueTheLast),
             ('charger', application.loadParts)
         )
-        x = LARGEUR_FENETRE / 2
+        x = LARGEUR_FENETRE - (LARGEUR_FENETRE/8)
         y = HAUTEUR_FENETRE / 3
         self._boutons = []
         for texte, cmd in items:
@@ -75,29 +76,3 @@ class Jeu:
     def detruire(self):
         pygame.time.set_timer(self._CLIGNOTER, 0)  # désactivation du timer
 
-
-class MenuBouton(pygame.sprite.Sprite):
-    """ Création d'un simple bouton rectangulaire """
-
-    def __init__(self, texte, couleur, font, x, y, largeur, hauteur, commande):
-        super().__init__()
-        self._commande = commande
-
-        self.image = pygame.Surface((largeur, hauteur))
-
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-
-        self.texte = font.render(texte, True, (0, 0, 0))
-        self.rectTexte = self.texte.get_rect()
-        self.rectTexte.center = (largeur / 2, hauteur / 2)
-
-        self.dessiner(couleur)
-
-    def dessiner(self, couleur):
-        self.image.fill(couleur)
-        self.image.blit(self.texte, self.rectTexte)
-
-    def executerCommande(self):
-        # Appel de la commande du bouton
-        self._commande()
