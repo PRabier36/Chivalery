@@ -1,4 +1,5 @@
 import pygame as pg
+from ..Config.config import *
 
 
 pg.init()
@@ -9,9 +10,9 @@ FONT = pg.font.Font(None, 32)
 
 class InputBox:
 
-    def __init__(self, screen, x, y, w, h, text=''):
+    def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
-        self.screen = screen
+        self.screen = pg.Surface((LARGEUR_FENETRE, HAUTEUR_FENETRE))
         self.color = COLOR_INACTIVE
         self.text = text
         self.txt_surface = FONT.render(text, True, self.color)
