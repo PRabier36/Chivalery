@@ -3,7 +3,7 @@ from Game.Model.Unit import Unit
 
 class Enemy(Unit):
 
-    def __init__(self, id, name, race, strength, agility, constitution, mana, mastery, luck):
+    def __init__(self, id, name, race, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop):
         self.__id = id
         self.__name = name
         self.__race = race
@@ -13,3 +13,5 @@ class Enemy(Unit):
         self.__mana = mana
         self.__mastery = mastery
         self.__luck = luck
+        self.__xpDrop = xpDrop
+        self.__goldDrop = goldDrop

@@ -1,7 +1,9 @@
 from Game.Model.KnightClasse import KnightClasse
 from Game.Model.Unit import Unit
+from Game.Model.Level import Level
 import random
 
+allLvl = Level()
 
 class Knight(Unit):
 
@@ -19,13 +21,14 @@ class Knight(Unit):
     # self.__mastery = mastery  # int
     # self.__luck = luck  # int
 
-    def __init__(self, id, name, player):
-        if id == 0:
-            self.__name = name
-            self.__player = player
-            self.create()
-        else:
+    def __init__(self, id=None, name=None):
+        if id:
             self.getKnightById(id)
+        else:
+            self.__name = name
+            self.create()
+
+
 
     # Getter
     def get_level(self):
@@ -135,3 +138,27 @@ class Knight(Unit):
         self.__mana = self.generateCapacityScore()  # int
         self.__mastery = self.generateCapacityScore()  # int
         return self
+
+    def affinityOffHigh(self):
+        return self.__affinityOff > self.__affinityDef and self.__affinityOff > self.__affinitySupp
+
+    def affinityDefHigh(self):
+        return self.__affinityDef > self.__affinityOff and self.__affinityDef > self.__affinitySupp
+
+    def KnightLvlUp(self):
+        self.__level += 1
+        self.__constitution += 1
+        if self.affinityOffHigh():
+            self.__strength += 1
+            self.__agility += 1
+        elif self.affinityDefHigh():
+            self.__agility += 1
+            self.__constitution += 1
+        else:
+            self.__mastery += 1
+            self.__mana += 1
+
+    def addExp(self, exp):
+        self.__exp += exp
+        while  self.__exp >= allLvl.getExpLvlByLvl(self.__level):
+            self.KnightLvlUp()

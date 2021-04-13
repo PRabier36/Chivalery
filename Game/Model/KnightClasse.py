@@ -1,5 +1,5 @@
 class KnightClasse:
-    def __init__(self, id, label, speciality, modifierAttack, modifierDefense, modifierSpeciality, listSkill):
+    def __init__(self, id=None, label=None, speciality=None, modifierAttack=None, modifierDefense=None, modifierSpeciality=None, listSkill=None):
         self.__id = id
         self.__label = label
         self.__speciality = speciality
