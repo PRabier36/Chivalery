@@ -12,7 +12,7 @@ class InputBox:
 
     def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
-        self.screen = pg.Surface((LARGEUR_FENETRE, HAUTEUR_FENETRE))
+        self.screen = pg.Surface((w, h))
         self.color = COLOR_INACTIVE
         self.text = text
         self.txt_surface = FONT.render(text, True, self.color)

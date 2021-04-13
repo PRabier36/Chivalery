@@ -17,10 +17,7 @@ class Application:
         self.groupeGlobal = pygame.sprite.Group()
         self.statut = True
 
-    def GoToPlayerCreationMenu(self):
-        # création du joueur
-        self._initialiser()
-        self.ecran = PlayerMenu(Player(10, "jean-claude", 0, 0, 10, 0, 0, 0), self, self.groupeGlobal)
+
 
 
     def ContinueTheLast(self):
@@ -39,6 +36,11 @@ class Application:
             self.groupeGlobal.empty()
         except AttributeError:
             pass
+
+    def GoToPlayerCreationMenu(self):
+        # création du joueur
+        self._initialiser()
+        self.ecran = PlayerMenu(self, self.groupeGlobal)
 
     def menu(self):
         # Affichage du menu

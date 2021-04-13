@@ -15,7 +15,7 @@ WinTitle = "Chivalry: Knight School {}".format(Version)
 pygame.display.set_caption(WinTitle)
 
 # BtnFont = pygame.font.SysFont('Harrington', 25)
-screen = pygame.Surface((LARGEUR_FENETRE, HAUTEUR_FENETRE))
+screen = pygame.display.set_mode((LARGEUR_FENETRE, HAUTEUR_FENETRE))
 
 width = screen.get_width()
 height = screen.get_height()
