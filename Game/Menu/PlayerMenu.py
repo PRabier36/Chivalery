@@ -14,7 +14,7 @@ class PlayerMenu:
         font = pygame.font.SysFont('Harrington', 24, bold=True)
         x = LARGEUR_FENETRE - (LARGEUR_FENETRE / 8)
         y = HAUTEUR_FENETRE / 3
-        self._myscreen = screen
+        self._myscreen = application.fenetre
         clock = pygame.time.Clock()
         input_box1 = InputBox(self._myscreen, 100, 100, 140, 32)
         input_box2 = InputBox(self._myscreen, 100, 300, 140, 32)

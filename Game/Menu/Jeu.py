@@ -11,7 +11,7 @@ class Jeu:
 
     def __init__(self, application, *groupes):
 
-        application.fond.fill((0, 0, 0))
+        
         font = pygame.font.SysFont('Harrington', 24, bold=True, italic=False)
 
         self.couleurs = dict(
