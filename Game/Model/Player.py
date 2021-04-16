@@ -16,7 +16,6 @@ class Player:
     def get_id(self):
         return self.__id
 
-
     def get_name(self):
         return self.__name
 

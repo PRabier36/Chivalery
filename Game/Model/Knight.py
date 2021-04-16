@@ -2,6 +2,9 @@ from Game.Model.KnightClasse import KnightClasse
 from Game.Model.Unit import Unit
 from Game.Model.Level import Level
 import random
+import requests
+import time
+
 
 allLvl = Level()
 
@@ -21,11 +24,12 @@ class Knight(Unit):
     # self.__mastery = mastery  # int
     # self.__luck = luck  # int
 
-    def __init__(self, id=None, name=None):
+    def __init__(self, id=None):
         if id:
             self.getKnightById(id)
         else:
-            self.__name = name
+            response = requests.get("http://names.drycodes.com/1?nameOptions=boy_names")
+            self.__name = response.text[2:-2]
             self.create()
 
 
@@ -67,6 +71,61 @@ class Knight(Unit):
 
     def set_Exp(self, exp):
         self.__exp = exp
+
+    # Unit
+    # Getter
+    def get_id(self):
+        return self.__id
+
+    def get_name(self):
+        return self.__name
+
+    def get_strength(self):
+        return self.__strength
+
+    def get_agility(self):
+        return self.__agility
+
+    def get_constitution(self):
+        return self.__constitution
+
+    def get_mana(self):
+        return self.__mana
+
+    def get_mastery(self):
+        return self.__mastery
+
+    def get_luck(self):
+        return self.__luck
+
+    # Setter
+    def set_id(self, id):
+        self.__id = id
+
+    def set_name(self, name):
+        self.__name = name
+
+    def set_strength(self, strength):
+        self.__strength = strength
+
+    def set_agility(self, agility):
+        self.__agility = agility
+
+    def set_constitution(self, constitution):
+        self.__constitution = constitution
+
+    def set_mana(self, mana):
+        self.__mana = mana
+
+    def set_mastery(self, mastery):
+        self.__mastery = mastery
+
+    def set_luck(self, luck):
+        self.__luck = luck
+
+
+
+
     # Functions
 
     def print(self):
@@ -91,8 +150,12 @@ class Knight(Unit):
             "mana :", self.__mana, "\n",
             "mastery :", self.__mastery, "\n")
 
-    def attack(self, target):
-        return
+    def attack(self, Fight):
+        print(self.get_name() + " attack")
+        while Fight.get_EnemiesIsDead() == False:
+            knightAttackSpeed = (15 - (self.get_agility() / 2)) / 3
+            time.sleep(knightAttackSpeed)
+            print(self.get_name()+" attack")
 
     def generateAffinity(self):
         i = 30
@@ -106,7 +169,6 @@ class Knight(Unit):
 
     def generateCapacityScore(self):
         d6list = [random.randint(1, 6), random.randint(1, 6), random.randint(1, 6), random.randint(1, 6)]
-        print(d6list)
         find = 7
         min = 0
         i = 0
@@ -116,7 +178,6 @@ class Knight(Unit):
                 find = d
             i += 1
         d6list.pop(min)
-        print(d6list)
         result = 0
         for d in d6list:
             result += d
