@@ -5,8 +5,8 @@ import random
 import requests
 import time
 
-
 allLvl = Level()
+
 
 class Knight(Unit):
 
@@ -28,11 +28,9 @@ class Knight(Unit):
         if id:
             self.getKnightById(id)
         else:
-            response = requests.get("http://names.drycodes.com/1?nameOptions=boy_names")
-            self.__name = response.text[2:-2]
+            response = requests.get("http://names.drycodes.com/1?nameOptions=boy_names&separator=space")
+            self.__name = (response.text[2:-2])
             self.create()
-
-
 
     # Getter
     def get_level(self):
@@ -98,6 +96,15 @@ class Knight(Unit):
     def get_luck(self):
         return self.__luck
 
+    def get_state(self):
+        return self.__state
+
+    def get_hp(self):
+        return self.__hp
+
+    def get_pos(self):
+        return self.__pos
+
     # Setter
     def set_id(self, id):
         self.__id = id
@@ -123,8 +130,14 @@ class Knight(Unit):
     def set_luck(self, luck):
         self.__luck = luck
 
+    def set_state(self, state):
+        self.__state = state
 
+    def set_hp(self, hp):
+        self.__hp = hp
 
+    def set_pos(self, pos):
+        self.__pos = pos
 
     # Functions
 
@@ -155,7 +168,7 @@ class Knight(Unit):
         while Fight.get_EnemiesIsDead() == False:
             knightAttackSpeed = (15 - (self.get_agility() / 2)) / 3
             time.sleep(knightAttackSpeed)
-            print(self.get_name()+" attack")
+            print(self.get_name() + " attack")
 
     def generateAffinity(self):
         i = 30
@@ -187,17 +200,19 @@ class Knight(Unit):
         self.__id = 1  # int
         self.__level = 1  # int
         self.__exp = 0
-        Kclass = KnightClasse(0,0,0,0,0,0,0)
+        Kclass = KnightClasse(0, 0, 0, 0, 0, 0, 0)
         Kclass.newKnight()
         self.__classe = Kclass  # class KnightClasse
 
         self.generateAffinity()
 
-        self.__strength = self.generateCapacityScore()  # int
-        self.__agility = self.generateCapacityScore()  # int
-        self.__constitution = self.generateCapacityScore()  # int
-        self.__mana = self.generateCapacityScore()  # int
-        self.__mastery = self.generateCapacityScore()  # int
+        self.__strength = self.generateCapacityScore()
+        self.__agility = self.generateCapacityScore()
+        self.__constitution = self.generateCapacityScore()
+        self.__mana = self.generateCapacityScore()
+        self.__mastery = self.generateCapacityScore()
+        self.__state = "alive"
+        self.__pos = "unknow"
         return self
 
     def affinityOffHigh(self):
@@ -221,5 +236,5 @@ class Knight(Unit):
 
     def addExp(self, exp):
         self.__exp += exp
-        while  self.__exp >= allLvl.getExpLvlByLvl(self.__level):
+        while self.__exp >= allLvl.getExpLvlByLvl(self.__level):
             self.KnightLvlUp()

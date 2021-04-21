@@ -1,19 +1,59 @@
-class Unit:
+from Game.Model.Unit import Unit
 
-    def __init__(self, id, name, level, classe, affinityOff, affinityDef, affinitySupp, strength, agility, constitution,
-                 mana, mastery, luck, state="alive", hp=None, pos="unknow"):
+
+class Enemy(Unit):
+
+    def __init__(self, id, name, race, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop, pos="front", state="alive", hp=0):
         self.__id = id
         self.__name = name
+        self.__race = race
         self.__strength = strength
         self.__agility = agility
         self.__constitution = constitution
         self.__mana = mana
         self.__mastery = mastery
         self.__luck = luck
+        self.__xpDrop = xpDrop
+        self.__goldDrop = goldDrop
         self.__state = state
-        self.__hp = hp
         self.__pos = pos
+        self.__hp = hp
 
+
+
+    # Getter
+
+    def get_race(self):
+        return self.__race
+
+    def get_luck(self):
+        return self.__luck
+
+    def get_xpDrop(self):
+        return self.__xpDrop
+
+    def get_goldDrop(self):
+        return self.__goldDrop
+
+
+    # Setter
+    def set_race(self, race):
+        self.__race = race
+
+
+    def set_luck(self, luck):
+        self.__luck = luck
+
+
+    def set_xpDrop(self, xpDrop):
+        self.__xpDrop = xpDrop
+
+
+    def set_goldDrop(self, goldDrop):
+        self.__goldDrop = goldDrop
+
+
+    # Unit
     # Getter
     def get_id(self):
         return self.__id
@@ -81,8 +121,6 @@ class Unit:
 
     def set_pos(self, pos):
         self.__pos = pos
-
-
 
 
 

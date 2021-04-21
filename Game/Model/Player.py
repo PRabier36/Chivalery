@@ -63,3 +63,24 @@ class Player:
 
     def set_knightList(self, knigthList):
         self.__knigntList = knigthList
+
+    def add_money(self, money):
+        self.__money += money;
+
+    def add_xp(self, xp):
+        self.__xp += xp;
+
+    def print(self):
+        print(self.__id)
+        print(self.__name)
+        print(self.__rank)
+        print(self.__level)
+        print(self.__money)
+        print(self.__xp)
+        print("Knights :\n")
+        i = 1
+        for knight in self.__knigntList:
+            print(str(i)+":\n")
+            knight.print()
+            i += 1
+
