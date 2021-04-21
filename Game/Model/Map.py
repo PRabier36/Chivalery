@@ -64,79 +64,78 @@ class Map:
     def add_e_back(self, unit):
         self.__e_back.append(unit)
 
-    def print_unit_name(self, name):
+    def print_unit_name(self, unit):
         r = ""
-        temp = name.split(" ")[0]
+        temp = unit.get_name().split(" ")[0]
         lp = len(temp)
         if lp > 10:
             lp = 10
         r += (temp[0:lp])
-
-        for i in range(15 - lp):
+        lp += len(str(unit.get_hp()))+3
+        r += " (" + str(unit.get_hp()) + ")"
+        for i in range(20 - lp):
             r += " "
         r += "| "
         return r
 
     def print(self):
-        line_max = 0
+        line_max = 1
         nb_back = 0
         nb_front = 0
         nb_e_front = 0
         nb_e_back = 0
         for i in range(len(self.__back)):
             nb_back += 1
-            if i > line_max:
-                line_max = i
+            if i + 1 > line_max:
+                line_max = i + 1
         for i in range(len(self.__front)):
             nb_front += 1
-            if i > line_max:
-                line_max = i
+            if i + 1 > line_max:
+                line_max = i + 1
         for i in range(len(self.__e_front)):
             nb_e_front += 1
-            if i > line_max:
-                line_max = i
+            if i + 1 > line_max:
+                line_max = i + 1
         for i in range(len(self.__e_back)):
             nb_e_back += 1
-            if i > line_max:
-                line_max = i
-        p = "|"
+            if i + 1 > line_max:
+                line_max = i + 1
+        p = ""
         for i in range(line_max):
+            p += "|"
             if i < nb_back:
-                name = self.__back[i].get_name()
-                p += self.print_unit_name(name)
+                p += self.print_unit_name(self.__back[i])
             else:
-                for j in range(15):
+                for j in range(20):
                     p += " "
                 p += "| "
             if i < nb_front:
                 name = self.__front[i].get_name()
-                p += self.print_unit_name(self.__front[i].get_name())
+                p += self.print_unit_name(self.__front[i])
             else:
-                for j in range(15):
+                for j in range(20):
                     p += " "
                 p += "| "
             if i < nb_e_front:
                 name = self.__e_front[i].get_name()
-                p += self.print_unit_name(self.__e_front[i].get_name())
+                p += self.print_unit_name(self.__e_front[i])
             else:
-                for j in range(15):
+                for j in range(20):
                     p += " "
                 p += "| "
             if i < nb_e_back:
                 name = self.__e_back[i].get_name()
-                p += self.print_unit_name(self.__e_back[i].get_name())
+                p += self.print_unit_name(self.__e_back[i])
             else:
-                for j in range(15):
+                for j in range(20):
                     p += " "
                 p += "| "
-            p += "\n|"
+            p += "\n"
         print(p)
         p = ""
-
 
     def __del__(self):
         self.__back.clear()
         self.__front.clear()
         self.__e_front.clear()
         self.__e_back.clear()
-

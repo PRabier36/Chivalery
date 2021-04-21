@@ -3,10 +3,8 @@ from Game.Model.Unit import Unit
 
 class Enemy(Unit):
 
-    def __init__(self, id, name, race, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop, pos="front", state="alive", hp=0):
-        self.__id = id
+    def __init__(self, name, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop, pos="front", state="alive", hp=0, race=None):
         self.__name = name
-        self.__race = race
         self.__strength = strength
         self.__agility = agility
         self.__constitution = constitution
@@ -15,9 +13,10 @@ class Enemy(Unit):
         self.__luck = luck
         self.__xpDrop = xpDrop
         self.__goldDrop = goldDrop
-        self.__state = state
         self.__pos = pos
+        self.__state = state
         self.__hp = hp
+        self.__race = race
 
 
 
@@ -55,9 +54,6 @@ class Enemy(Unit):
 
     # Unit
     # Getter
-    def get_id(self):
-        return self.__id
-
     def get_name(self):
         return self.__name
 
@@ -89,9 +85,6 @@ class Enemy(Unit):
         return self.__pos
 
     # Setter
-    def set_id(self, id):
-        self.__id = id
-
     def set_name(self, name):
         self.__name = name
 
@@ -122,5 +115,19 @@ class Enemy(Unit):
     def set_pos(self, pos):
         self.__pos = pos
 
-
+    def print(self):
+        print("id : "+str(self.__id) +
+              "name : "+str(self.__name) +
+              "strength : "+str(self.__strength) +
+              "agility : "+str(self.__agility) +
+              "constitution : "+str(self.__constitution) +
+              "mana : "+str(self.__mana) +
+              "mastery : "+str(self.__mastery) +
+              "luck : "+str(self.__luck) +
+              "xp drop : "+str(self.__xpDrop) +
+              "gold drop : "+str(self.__goldDrop))
+        # print("race : "+str(self.__race))
+        # print("state : "+str(self.__state))
+        # print("pos : "+str(self.__pos))
+        # print("hp : "+str(self.__hp))
 

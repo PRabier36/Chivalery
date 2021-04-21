@@ -143,25 +143,26 @@ class Knight(Unit):
 
     def print(self):
         print(
-            "id :", self.__id, "\n",
+            # "id :", self.__id, "\n",
             "name :", self.__name, "\n",
             "level :", self.__level, "\n",
             "exp :", self.__exp, "\n",
             "classe :\n"
-            "   id :", self.__classe.get_id(), "\n",
             "   label :", self.__classe.get_label(), "\n",
             "   speciality :", self.__classe.get_speciality(), "\n",
             "   modifierAttack :", self.__classe.get_modifierAttack(), "\n",
             "   modifierDefense :", self.__classe.get_modifierDefense(), "\n",
             "   modifierSpeciality :", self.__classe.get_modifierSpeciality(), "\n",
-            "affinityOff :", self.__affinityOff, "\n",
-            "affinityDef :", self.__affinityDef, "\n",
-            "affinitySupp :", self.__affinitySupp, "\n",
-            "strength :", self.__strength, "\n",
-            "agility :", self.__agility, "\n",
-            "constitution :", self.__constitution, "\n",
-            "mana :", self.__mana, "\n",
-            "mastery :", self.__mastery, "\n")
+            "Affinity : \n"
+            "    Off :", self.__affinityOff, "\n",
+            "    Def :", self.__affinityDef, "\n",
+            "    Supp :", self.__affinitySupp, "\n"
+            "Stats : ",
+            "    Strength :", self.__strength, "\n",
+            "    Agility :", self.__agility, "\n",
+            "    Constitution :", self.__constitution, "\n",
+            "    Mana :", self.__mana, "\n",
+            "    Mastery :", self.__mastery, "\n")
 
     def attack(self, Fight):
         print(self.get_name() + " attack")
@@ -197,7 +198,7 @@ class Knight(Unit):
         return result
 
     def create(self):
-        self.__id = 1  # int
+        # self.__id = 1  # int
         self.__level = 1  # int
         self.__exp = 0
         Kclass = KnightClasse(0, 0, 0, 0, 0, 0, 0)

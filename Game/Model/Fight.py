@@ -1,3 +1,4 @@
+import os
 import time
 import threading
 import random
@@ -11,16 +12,31 @@ from Game.Model.Unit import Unit
 
 class Fight:
 
-    def __init__(self, id=None, gold=None, xp=None, enemies=None, player=None):
-        self.__id = id
+    def __init__(self, name, gold=None, xp=None, time=15, enemies=None, player=None):
+        self.__name = name
         self.__gold = gold
         self.__xp = xp
+        self.__time = time
         self.__enemies = enemies
-        self.__enemies_dead = []
         self.__player = player
+        self.__enemies_dead = []
         self.__state = "ongoing"
         self.__attackSpeed = []
         self.__map = Map()
+
+
+    def print(self):
+        r = str(self.__name)+"\n"+ \
+            "       Time : "+str(self.__time)+" \n" \
+            "       Loot: "+str(self.__gold)+" gold, "+str(self.__xp)+" xp\n" \
+            "       Enemy(ies) : "
+        len_enemies = len(self.__enemies)
+        i = 0
+        for e in self.__enemies:
+            r += e.get_name()
+            if i < len_enemies:
+                r += ", "
+        return r
 
     def testInitiative(self):
         for knight in self.__player.get_knightList():
@@ -66,8 +82,10 @@ class Fight:
 
         knight_attack_speed = (15 - (Knight.get_agility() / 2)) / 3
 
-        front_attack = int((Knight.get_strength() + Knight.get_constitution())/2)
-        back_attack = int((Knight.get_strength() + Knight.get_agility())/2)
+        front_attack = int(((Knight.get_strength() + Knight.get_constitution())/2) +
+                           Knight.get_classe().get_modifierAttack())
+        back_attack = int(((Knight.get_strength() + Knight.get_agility())/2) +
+                          Knight.get_classe().get_modifierAttack())
 
         time.sleep(3)
 
@@ -102,8 +120,9 @@ class Fight:
         self.__gold += Enemy.get_goldDrop()
         self.__xp += Enemy.get_xpDrop()
 
-    def timer(self, Timer):
-        for i in range(-3, Timer, 1):
+    def timer(self):
+        for i in range(-3, self.__time, 1):
+            os.system('cls')
             print(i)
             self.verif_map_pos()
             if self.__state != "ongoing":
@@ -156,7 +175,7 @@ class Fight:
         t_init = threading.Thread(target=self.testInitiative)
         t_init.start()
         t_init.join()
-        t0 = threading.Thread(target=self.timer, args=(60,))
+        t0 = threading.Thread(target=self.timer)
         t0.start()
 
         t1 = threading.Thread(target=self.verifStateKnights)
@@ -181,12 +200,15 @@ class Fight:
             t.join()
         print(self.__state)
         print("fin du combat")
+        time.sleep(3)
+        os.system('cls')
         if self.__state == "victory":
             self.victory()
         elif self.__state == "draw":
             self.draw()
         else:
             self.defeat()
+        self.__player.revive()
         return
 
     def victory(self):
@@ -196,24 +218,26 @@ class Fight:
             knight.addExp(self.__xp)
         print("Gains :\n"
               "     Player:\n"
-              "         " + str(self.__gold) + "\n"
-              "         " + str(self.__xp/2) + "\n"
+              "         " + str(int(self.__gold)) + "\n"
+              "         " + str(int(self.__xp/2)) + "\n"
               "     Player:\n"
-              "         " + str(self.__xp) + "\n"
+              "         " + str(int(self.__xp)) + "\n"
               "")
+        input("Enter for continue...")
 
     def draw(self):
-        self.__player.add_money(self.__gold/2)
-        self.__player.add_xp(self.__xp/4)
+        self.__player.add_money(int(self.__gold/2))
+        self.__player.add_xp(int(self.__xp/4))
         for knight in self.__player.get_knightList():
-            knight.addExp(self.__xp/2)
+            knight.addExp(int(self.__xp/2))
         print("Gains :\n"
               "     Player:\n"
-              "         " + (self.__gold/2) + "\n"
+              "         " + str(self.__gold/2) + "\n"
               "         " + str(self.__xp/4) + "\n"
-              "     Player:\n"
+              "     Knights:\n"
               "         " + str(self.__xp/2) + "\n"
               "")
+        input("Enter for continue...")
 
     def defeat(self):
         return

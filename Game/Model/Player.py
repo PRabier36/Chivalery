@@ -1,6 +1,9 @@
+from Game.Model.Knight import Knight
+
+
 class Player:
 
-    def __init__(self, id, name, rank, level, money, xp, teachingBonus, kninghtList):
+    def __init__(self, id, name, rank=1, level=1, money=45, xp=0, teachingBonus=0, kninghtList=[]):
         self.__id = id
         self.__name = name
         self.__rank = rank
@@ -71,16 +74,32 @@ class Player:
         self.__xp += xp;
 
     def print(self):
-        print(self.__id)
-        print(self.__name)
-        print(self.__rank)
-        print(self.__level)
-        print(self.__money)
-        print(self.__xp)
+        print("    "+self.__name)
+        print("    rank : " + str(self.__rank))
+        print("    level : " + str(self.__level))
+        print("    money : " + str(self.__money) + " Gold")
+        print("    xp : " + str(self.__xp))
+        print("    Nb Knights : " + str(len(self.__knigntList)))
+
+    def print_knights(self):
         print("Knights :\n")
         i = 1
-        for knight in self.__knigntList:
-            print(str(i)+":\n")
-            knight.print()
-            i += 1
+        if len(self.__knigntList) == 0:
+            print("No knight")
+        else:
+            for knight in self.__knigntList:
+                print(str(i)+":\n")
+                knight.print()
+                i += 1
 
+    def add_knight(self, knight):
+        self.__knigntList.append(knight)
+
+    def create_new_knight(self):
+        k = Knight()
+        self.__knigntList.append(k)
+        return k
+
+    def revive(self):
+        for knight in self.__knigntList:
+            knight.set_state("alive")
