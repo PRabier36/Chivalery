@@ -63,7 +63,6 @@ class KnightClasse:
             "modifierSpeciality :", self.__modifierSpeciality, "\n")
 
     def newKnight(self):
-        self.__id = 1
         self.__label = "Ecuyer"
         self.__speciality = 1
         self.__modifierAttack = 1

@@ -1,4 +1,6 @@
 # main du projet Chivalery
+import json
+
 import pygame
 # from Game.Menu.Application import *
 from Game.Model.GUI import start_game
@@ -10,7 +12,9 @@ from Game.Model.Knight import Knight
 
 start_game()
 
-
+# k = Knight()
+#
+# print(json.dumps(k.__dict__))
 # Ks = [Knight() for i in range(1)]
 # Ks = [Knight() for i in range(5)]
 # for k in Ks:

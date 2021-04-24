@@ -5,6 +5,8 @@ import random
 import requests
 import time
 
+api_url = "http://localhost:3000"
+
 allLvl = Level()
 
 
@@ -13,7 +15,7 @@ class Knight(Unit):
     # self.__id = id  # int
     # self.__name = name  # string
     # self.__level = level  # int
-    # self.__classe = classe  # class KnightClasse
+    # self.__Knight_class = classe  # class KnightClasse
     # self.__affinityOff = affinityOff  # int 3-24 total affinity 30
     # self.__affinityDef = affinityDef  # int 3-24 total
     # self.__affinitySupp = affinitySupp  # int 3-24 total
@@ -37,7 +39,7 @@ class Knight(Unit):
         return self.__level
 
     def get_classe(self):
-        return self.__classe
+        return self.__Knight_class
 
     def get_affinityOff(self):
         return self.__affinityOff
@@ -56,7 +58,7 @@ class Knight(Unit):
         self.__level = level
 
     def set_classe(self, classe):
-        self.__classe = classe
+        self.__Knight_class = classe
 
     def set_affinityOff(self, affinityOff):
         self.__affinityOff = affinityOff
@@ -148,21 +150,41 @@ class Knight(Unit):
             "level :", self.__level, "\n",
             "exp :", self.__exp, "\n",
             "classe :\n"
-            "   label :", self.__classe.get_label(), "\n",
-            "   speciality :", self.__classe.get_speciality(), "\n",
-            "   modifierAttack :", self.__classe.get_modifierAttack(), "\n",
-            "   modifierDefense :", self.__classe.get_modifierDefense(), "\n",
-            "   modifierSpeciality :", self.__classe.get_modifierSpeciality(), "\n",
+            "   label :", self.__Knight_class.get_label(), "\n",
+            "   speciality :", self.__Knight_class.get_speciality(), "\n",
+            "   modifierAttack :", self.__Knight_class.get_modifierAttack(), "\n",
+            "   modifierDefense :", self.__Knight_class.get_modifierDefense(), "\n",
+            "   modifierSpeciality :", self.__Knight_class.get_modifierSpeciality(), "\n",
             "Affinity : \n"
             "    Off :", self.__affinityOff, "\n",
             "    Def :", self.__affinityDef, "\n",
             "    Supp :", self.__affinitySupp, "\n"
-            "Stats : ",
+                                               "Stats : ",
             "    Strength :", self.__strength, "\n",
             "    Agility :", self.__agility, "\n",
             "    Constitution :", self.__constitution, "\n",
             "    Mana :", self.__mana, "\n",
             "    Mastery :", self.__mastery, "\n")
+
+    def getKnightById(self, id):
+        response = requests.request("GET", api_url + "/knights/" + id)
+        knight = response.json()
+
+        self.__id = knight["_id"]
+        self.__level = knight["level"]
+        self.__exp = knight["exp"]
+        self.__Knight_class = KnightClasse(knight["Knight_class"]["_id"], knight["Knight_class"]["label"],
+                                     knight["Knight_class"]["speciality"], knight["Knight_class"]["modifierAttack"],
+                                     knight["Knight_class"]["modifierDefense"],
+                                     knight["Knight_class"]["modifierSpeciality"])
+        self.__strength = knight["strength"]
+        self.__agility = knight["agility"]
+        self.__constitution = knight["constitution"]
+        self.__mana = knight["mana"]
+        self.__mastery = knight["mastery"]
+        self.__state = knight["state"]
+        self.__pos = knight["pos"]
+        return self
 
     def attack(self, Fight):
         print(self.get_name() + " attack")
@@ -203,7 +225,7 @@ class Knight(Unit):
         self.__exp = 0
         Kclass = KnightClasse(0, 0, 0, 0, 0, 0, 0)
         Kclass.newKnight()
-        self.__classe = Kclass  # class KnightClasse
+        self.__Knight_class = Kclass  # class KnightClasse
 
         self.generateAffinity()
 
@@ -214,6 +236,19 @@ class Knight(Unit):
         self.__mastery = self.generateCapacityScore()
         self.__state = "alive"
         self.__pos = "unknow"
+
+        payload = "{\r\n    \"name\": \"" + self.__name + "\",\r\n    \"level\": \"" + str(
+            self.__level) + "\",\r\n    \"exp\": \"" + str(self.__exp) + "\",\r\n    \"affinityOff\": \"" + str(
+            self.__affinityOff) + "\",\r\n    \"affinityDef\": \"" + str(
+            self.__affinityDef) + "\",\r\n    \"affinitySupp\": \"" + str(
+            self.__affinitySupp) + "\",\r\n    \"strength\": \"" + str(
+            self.__strength) + "\",\r\n    \"agility\": \"" + str(
+            self.__agility) + "\",\r\n    \"constitution\": \"" + str(
+            self.__constitution) + "\",\r\n    \"mana\": \"" + str(self.__mana) + "\",\r\n    \"mastery\": \"" + str(
+            self.__mastery) + "\",\r\n    \"state\": \"" + str(self.__state) + "\",\r\n    \"pos\": \"" + str(
+            self.__pos) + "\"\r\n}"
+        headers = {}
+        requests.request("POST", api_url + "/knights", headers=headers, data=payload)
         return self
 
     def affinityOffHigh(self):

@@ -7,18 +7,75 @@ from Game.Model.enemy import Enemy
 from Game.Model.Unit import Unit
 from Game.Model.Player import Player
 import os
+import requests
+
+api_url = "http://localhost:3000"
 
 
 def start_game():
     os.system('cls')
-    print("New game")
-    new_game()
+    play = True
+    while play:
+        try:
+
+            choice = int(input("1. New game\n"
+                               "2. Continue\n"
+                               "0. Quit\n"))
+            if choice == 1:
+                new_game()
+            elif choice == 2:
+                selectPlayer()
+            elif choice == 0:
+                print("Bye !")
+                return
+            else:
+                print("Entry error !")
+                input("Enter for continue...")
+        except ValueError:
+            print("Entry error !")
+            input("Enter for continue...")
     return
 
 
+def listPlayers():
+    try:
+        players = requests.request("GET", api_url+"/players/")
+        playerList = []
+        i = 1
+        for player in players.json():
+            p = Player(player["_id"], player["name"], player["rank"], player["level"], player["money"], player["xp"], player["teachingBonus"])
+
+            p.add_from_list(player["Knight_list"])
+            playerList.append(p)
+            print(i)
+            p.print()
+            i += 1
+        return playerList
+    except ValueError:
+        print(ValueError)
+
+
+def selectPlayer():
+    list = listPlayers()
+    play = True
+    while play:
+        try:
+            choice = int(input("0. Return\n"
+                               "Select your save\n"))
+            if choice == 0:
+                return
+            else:
+
+                main_menu(list[(choice-1)])
+        except ValueError:
+            print("Entry error !")
+            input("Enter for continue...")
+
+
 def new_game():
-    name = "King Arthur"
-    # name = input("Your name ?: ")
+    # name = "King Arthur"
+    name = input("Your name ?: ")
+
     p = Player(None, name)
     main_menu(p)
 
@@ -36,7 +93,7 @@ def main_menu(Player):
                                "4. Fight\n"
                                # "5. School\n"
                                # "6. Shop\n"
-                               "0. End\n"))
+                               "0. Save and back menu\n"))
             if choice == 1:
                 if Player.get_money() > 25:
                     k = Player.create_new_knight()
@@ -46,7 +103,7 @@ def main_menu(Player):
                     input("Enter for continue...")
                 else:
                     print("Need more gold\n"
-                          "Your gold : "+str(Player.get_money()))
+                          "Your gold : " + str(Player.get_money()))
                     input("Enter for continue...")
             elif choice == 2:
                 print("Profil:\n")
@@ -63,7 +120,7 @@ def main_menu(Player):
                     print("Need to recruit")
                     input("Enter for continue...")
             elif choice == 0:
-                print("Good bye !")
+                print("Save... !")
                 input("Enter for continue...")
                 return
             else:
@@ -73,25 +130,26 @@ def main_menu(Player):
             print("Entry error !")
             input("Enter for continue...")
 
+
 def list_fight(Player):
-    goblin_str = 7
-    goblin_agi = 14
-    goblin_const = 10
-    goblin_mana = 8
-    goblin_mastery = 7
-    goblin_luck = 8
-    goblin_xpDrop = 50
-    goblin_goldDrop = 5
-    goblin_pos = "front"
-    g1 = Enemy("Goblin", goblin_str, goblin_agi, goblin_const, goblin_mana,
-               goblin_mastery, goblin_luck, goblin_xpDrop, goblin_goldDrop, goblin_pos)
-    f1_e = [g1]
-    fight1 = Fight("First Fight", 10, 50, 15, f1_e, Player)
-    fight_list = [fight1]
-    i = 1
     fight_loop = True
     while fight_loop:
         os.system('cls')
+        goblin_str = 7
+        goblin_agi = 14
+        goblin_const = 10
+        goblin_mana = 8
+        goblin_mastery = 7
+        goblin_luck = 8
+        goblin_xpDrop = 50
+        goblin_goldDrop = 5
+        goblin_pos = "front"
+        g1 = Enemy("Goblin", goblin_str, goblin_agi, goblin_const, goblin_mana,
+                   goblin_mastery, goblin_luck, goblin_xpDrop, goblin_goldDrop, goblin_pos)
+        f1_e = [g1]
+        fight1 = Fight("First Fight", 10, 50, 15, f1_e, Player)
+        fight_list = [fight1]
+        i = 1
         for fight in fight_list:
             print(str(i) + ". " + fight.print())
         print("0. Return")
@@ -102,7 +160,7 @@ def list_fight(Player):
             elif choice <= len(fight_list):
                 i = 0
                 for fight in fight_list:
-                    if choice == i+1:
+                    if choice == i + 1:
                         fight.Start()
                     i += 1
             else:
@@ -111,6 +169,5 @@ def list_fight(Player):
         except ValueError:
             print("Entry error !")
             input("Enter for continue...")
-
 
     return

@@ -212,30 +212,34 @@ class Fight:
         return
 
     def victory(self):
-        self.__player.add_money(self.__gold)
-        self.__player.add_xp(self.__xp/2)
+        gp = int(self.__gold)
+        xp = int(self.__xp)
+        self.__player.add_money(gp)
+        self.__player.add_xp(xp/2)
         for knight in self.__player.get_knightList():
-            knight.addExp(self.__xp)
+            knight.addExp(xp)
         print("Gains :\n"
               "     Player:\n"
-              "         " + str(int(self.__gold)) + "\n"
-              "         " + str(int(self.__xp/2)) + "\n"
-              "     Player:\n"
-              "         " + str(int(self.__xp)) + "\n"
+              "         " + str(gp) + "\n"
+              "         " + str(xp/2) + "\n"
+              "     Knight:\n"
+              "         " + str(xp) + "\n"
               "")
         input("Enter for continue...")
 
     def draw(self):
-        self.__player.add_money(int(self.__gold/2))
-        self.__player.add_xp(int(self.__xp/4))
+        gp = int(self.__gold)
+        xp = int(self.__xp)
+        self.__player.add_money(gp/2)
+        self.__player.add_xp(xp/4)
         for knight in self.__player.get_knightList():
-            knight.addExp(int(self.__xp/2))
+            knight.addExp(xp)
         print("Gains :\n"
               "     Player:\n"
-              "         " + str(self.__gold/2) + "\n"
-              "         " + str(self.__xp/4) + "\n"
-              "     Knights:\n"
-              "         " + str(self.__xp/2) + "\n"
+              "         " + str(gp/2) + "\n"
+              "         " + str(xp/4) + "\n"
+              "     Knight:\n"
+              "         " + str(xp/2) + "\n"
               "")
         input("Enter for continue...")
 
