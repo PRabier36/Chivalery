@@ -91,6 +91,7 @@ def main_menu(Player):
                                "2. Player' info\n"
                                "3. Knight's List\n"
                                "4. Fight\n"
+                               "5. Save\n"
                                # "5. School\n"
                                # "6. Shop\n"
                                "0. Save and back menu\n"))
@@ -120,8 +121,7 @@ def main_menu(Player):
                     print("Need to recruit")
                     input("Enter for continue...")
             elif choice == 5:
-                print(Player.get_knightList())
-
+                Player.save()
                 input("Enter for continue...")
             elif choice == 0:
                 Player.save()
@@ -140,6 +140,7 @@ def list_fight(Player):
     fight_loop = True
     while fight_loop:
         os.system('cls')
+        goblin_id = 123
         goblin_str = 7
         goblin_agi = 14
         goblin_const = 10
@@ -149,7 +150,7 @@ def list_fight(Player):
         goblin_xpDrop = 50
         goblin_goldDrop = 5
         goblin_pos = "front"
-        g1 = Enemy("Goblin", goblin_str, goblin_agi, goblin_const, goblin_mana,
+        g1 = Enemy(goblin_id, "Goblin", goblin_str, goblin_agi, goblin_const, goblin_mana,
                    goblin_mastery, goblin_luck, goblin_xpDrop, goblin_goldDrop, goblin_pos)
         f1_e = [g1]
         fight1 = Fight("First Fight", 10, 50, 15, f1_e, Player)
@@ -157,6 +158,7 @@ def list_fight(Player):
         i = 1
         for fight in fight_list:
             print(str(i) + ". " + fight.print())
+            i += 1
         print("0. Return")
         try:
             choice = int(input("Choose your quest : "))
