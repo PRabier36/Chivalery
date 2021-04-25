@@ -1,8 +1,6 @@
 import sys
 import tkinter
 import pygame
-import pygame_menu
-from pygame_menu import Menu
 from ..Components.InputBox import *
 from ..Config.config import *
 from ..Model.Player import *

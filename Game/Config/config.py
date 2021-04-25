@@ -1,7 +1,5 @@
 
 import pygame
-import pygame_menu
-from pygame_menu import Theme
 
 HAUTEUR_FENETRE = 720
 LARGEUR_FENETRE = 1080
@@ -23,15 +21,3 @@ background = pygame.image.load('./Game/Template/chivalry.jpg')
 background2 = pygame.image.load('./Game/Template/intranet.jpg')
 colorBack = (83, 33, 33)
 # IMAGE_Chivalry_WALLPAPER = __images_path__.format('wallpaper.jpg')
-tempfont = pygame_menu.font.FONT_NEVIS
-
-temptest = pygame_menu.baseimage.BaseImage(
-    image_path=pygame_menu.baseimage.IMAGE_EXAMPLE_GRAY_LINES,
-    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_REPEAT_XY
-)
-
-lowopacity = Theme(background_color=temptest,  # transparent background
-                   title_font_color=(255, 255, 255),
-                   title_font_shadow=True,
-                   widget_padding=25,
-                   widget_font=tempfont)
