@@ -3,7 +3,8 @@ from Game.Model.Unit import Unit
 
 class Enemy(Unit):
 
-    def __init__(self, name, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop, pos="front", state="alive", hp=0, race=None):
+    def __init__(self, id, name, strength, agility, constitution, mana, mastery, luck, xpDrop, goldDrop, pos="front", state="alive", hp=0, race=None):
+        self.__id = id
         self.__name = name
         self.__strength = strength
         self.__agility = agility

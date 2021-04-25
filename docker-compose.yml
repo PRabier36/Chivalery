@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: "3.9"  # optional since v1.27.0
 services:
     redis:
@@ -20,3 +21,30 @@ volumes:
   logvolume01: {}
   logvolume02: {}
     
+=======
+version: "3.9"
+services:
+    redis:
+        image: redis
+        ports:
+          - 6379:6379
+        volumes:
+          - /redis/conf:/usr/local/etc/redis
+
+#    mongo:
+#        image: mongo
+#        volumes:
+#          - ./db_data:/data/db
+#          - logvolume02:/var/log
+#        restart: always
+#        ports:
+#          - 27017:27017
+#        environment:
+#          MONGO_INITDB_ROOT_USERNAME: root
+#          MONGO_INITDB_ROOT_PASSWORD: root
+#
+#
+#volumes:
+#  logvolume01: {}
+#  logvolume02: {}
+>>>>>>> origin/ia_knight

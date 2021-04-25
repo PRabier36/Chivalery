@@ -68,4 +68,4 @@ class KnightClasse:
         self.__modifierAttack = 1
         self.__modifierDefense = 1
         self.__modifierSpeciality = 1
-        self.__listSkill = []
+        # self.__listSkill = []

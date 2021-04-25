@@ -1,8 +1,11 @@
+import redis
+
+cache = redis.Redis(host='redis', port=6379)
+
 import os
 import time
 import threading
 import random
-from typing import List, Any, Tuple
 
 from Game.Model.Knight import Knight
 from Game.Model.Map import Map
@@ -50,9 +53,9 @@ class Fight:
 
     def test_hp(self):
         for knight in self.__player.get_knightList():
-            knight.set_hp(int(knight.get_constitution() * 10))
+            cache.set(str("unit-" + knight.get_id() + "-hp"), int(knight.get_constitution() * 10))
         for enemy in self.__enemies:
-            enemy.set_hp(int(enemy.get_constitution() * 10))
+            cache.set(str("unit-" + enemy.get_id() + "-hp"), int(enemy.get_constitution() * 10))
 
     def attack(self, offensive_unit, target_zone, damage):
         if target_zone == "back":
@@ -69,21 +72,23 @@ class Fight:
             return "error"
         r = random.randint(0, (len(list_target) - 1))
         target = list_target[r]
-        target.set_hp(target.get_hp() - damage)
-        self.__logs += (offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name() + "(" + str(target.get_hp()) + ")")+"\n"
-        if target.get_hp() <= 0:
+        cache.decr(str("unit-" + target.get_id() + "-hp"), damage)
+        self.__logs += (offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name()
+                        + "(" + str(cache.get(str("unit-" + target.get_id() + "-hp")).decode('utf-8')) + ")")+"\n"
+        if int(cache.get(str("unit-" + target.get_id() + "-hp")).decode('utf-8')) <= 0:
             target.set_state("ko")
             self.__logs += (target.get_name() + " is " + target.get_state())+"\n"
             self.__map.remove_unit_from_pos(target, target_zone)
             target.set_pos("out")
 
+    def print_hp(self, unit):
+        self.__logs += (unit.get_name() + " hp " + str(cache.get(str("unit-" + unit.get_id() + "-hp")).decode('utf-8')))+"\n"
+
     def turn_knight(self, Knight):
-        self.__logs += (Knight.get_name() + " hp " + str(Knight.get_hp()))+"\n"
+        self.print_hp(Knight)
+        self.verif_pos_unknow(Knight, "front")
 
-        if Knight.get_pos() == "unknow":
-            Knight.set_pos("front")
-
-        knight_attack_speed = (15 - (Knight.get_agility() / 2)) / 3
+        knight_attack_speed = self.test_attack_speed(Knight)
 
         front_attack = int(((Knight.get_strength() + Knight.get_constitution())/2) +
                            Knight.get_classe().get_modifierAttack())
@@ -99,14 +104,19 @@ class Fight:
                 self.attack(Knight, "e_front", back_attack)
             time.sleep(knight_attack_speed)
 
+    def verif_pos_unknow(self, unit, front):
+        if unit.get_pos() == "unknow":
+            unit.set_pos(front)
+
+    def test_attack_speed(self, unit):
+        return (15 - (Enemy.get_agility() / 2)) / 3
 
     def turn_enemy(self, Enemy):
-        self.__logs += (Enemy.get_name() + " hp " + str(Enemy.get_hp()))+"\n"
+        self.print_hp(Enemy)
 
-        if Enemy.get_pos() == "unknow":
-            Enemy.set_pos("e_front")
+        self.verif_pos_unknow(Enemy, "e_front")
 
-        Enemy_attack_speed = (15 - (Enemy.get_agility() / 2)) / 3
+        Enemy_attack_speed = self.test_attack_speed(Enemy)
 
         front_attack = int((Enemy.get_strength() + Enemy.get_constitution())/2)
         back_attack = int((Enemy.get_strength() + Enemy.get_agility())/2)
@@ -119,9 +129,8 @@ class Fight:
             if Enemy.get_pos() == "back":
                 self.attack(Enemy, "front", back_attack)
             time.sleep(Enemy_attack_speed)
-        if Enemy.get_state() != "alive":
-            self.__gold += Enemy.get_goldDrop()
-            self.__xp += Enemy.get_xpDrop()
+        self.__gold += Enemy.get_goldDrop()
+        self.__xp += Enemy.get_xpDrop()
 
     def timer(self):
         for i in range(-3, self.__time, 1):
@@ -171,7 +180,7 @@ class Fight:
                     break
                 if self.__state:
                     break
-            if not e_alive:
+            if e_alive == False:
                 self.__state = "victory"
         return
 

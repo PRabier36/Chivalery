@@ -110,21 +110,18 @@ class Map:
                     p += " "
                 p += "| "
             if i < nb_front:
-                name = self.__front[i].get_name()
                 p += self.print_unit_name(self.__front[i])
             else:
                 for j in range(20):
                     p += " "
                 p += "| "
             if i < nb_e_front:
-                name = self.__e_front[i].get_name()
                 p += self.print_unit_name(self.__e_front[i])
             else:
                 for j in range(20):
                     p += " "
                 p += "| "
             if i < nb_e_back:
-                name = self.__e_back[i].get_name()
                 p += self.print_unit_name(self.__e_back[i])
             else:
                 for j in range(20):

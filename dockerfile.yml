@@ -11,10 +11,17 @@ RUN docker-compose up \
 && cd ../api \
 && npm install \
 && npm run start \
+<<<<<<< HEAD
 && cd ../chivalry 
 
 
 CMD [ "python ./main.py" ]
+=======
+&& cd ../chivalry
+
+
+CMD [ "main.py" ]
+>>>>>>> origin/ia_knight
 
 
 # docker build . -t chivalry_dev:1
