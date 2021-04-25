@@ -1,0 +1,21 @@
+FROM python:3.9.4-alpine3.13
+
+COPY . /usr/src/chivalry
+COPY ../api_mongo /usr/src/api
+
+WORKDIR /usr/src/chivalry
+
+RUN docker-compose up \
+&& pip freeze > requirements.txt\
+&& pip install -r requirements.txt \
+&& cd ../api \
+&& npm install \
+&& npm run start \
+&& cd ../chivalry 
+
+
+CMD [ "python ./main.py" ]
+
+
+# docker build . -t chivalry_dev:1
+# docker run --rm -it chivalry_dev:1
