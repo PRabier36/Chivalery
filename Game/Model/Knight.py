@@ -4,8 +4,9 @@ from Game.Model.Level import Level
 import random
 import requests
 import time
+from Game.API.api import Api
 
-api_url = "http://localhost:3000"
+api = Api()
 
 allLvl = Level()
 
@@ -167,16 +168,17 @@ class Knight(Unit):
             "    Mastery :", self.__mastery, "\n")
 
     def getKnightById(self, id):
-        response = requests.request("GET", api_url + "/knights/" + id)
+        response = api.request("/knights/" + id, "GET")
         knight = response.json()
 
         self.__id = knight["_id"]
         self.__level = knight["level"]
         self.__exp = knight["exp"]
         self.__Knight_class = KnightClasse(knight["Knight_class"]["_id"], knight["Knight_class"]["label"],
-                                     knight["Knight_class"]["speciality"], knight["Knight_class"]["modifierAttack"],
-                                     knight["Knight_class"]["modifierDefense"],
-                                     knight["Knight_class"]["modifierSpeciality"])
+                                           knight["Knight_class"]["speciality"],
+                                           knight["Knight_class"]["modifierAttack"],
+                                           knight["Knight_class"]["modifierDefense"],
+                                           knight["Knight_class"]["modifierSpeciality"])
         self.__strength = knight["strength"]
         self.__agility = knight["agility"]
         self.__constitution = knight["constitution"]
@@ -235,25 +237,28 @@ class Knight(Unit):
         self.__mana = self.generateCapacityScore()
         self.__mastery = self.generateCapacityScore()
         self.__state = "alive"
-        self.__pos = "unknow"
+        self.__pos = "front"
 
-        payload = "{" \
-                  "     \"name\": \"Sylvester " + self.__name + "\"," \
-                  "     \"level\": \"" + str(self.__level) + "\"," \
-                  "     \"exp\": \"" + str(self.__exp) + "\"," \
-                  "     \"affinityOff\": \"" + str(self.__affinityOff) + "\"," \
-                  "     \"affinityDef\": \"" + str(self.__affinityDef) + "\"," \
-                  "     \"affinitySupp\": \"" + str(self.__affinitySupp) + "\"," \
-                  "     \"strength\": \"" + str(self.__strength) + "\"," \
-                  "     \"agility\": \"" + str(self.__agility) + "\"," \
-                  "     \"constitution\": \"" + str(self.__constitution) + "\"," \
-                  "     \"mana\": \"" + str(self.__mana) + "\"," \
-                  "     \"mastery\": \"" + str(self.__mastery) + "\"," \
-                  "     \"state\": \"" + str(self.__state) + "\"," \
-                  "     \"pos\": \"" + str(self.__pos) + "t\"" \
-                  "} "
-        headers = {}
-        requests.request("POST", api_url + "/knights", headers=headers, data=payload)
+        payload = {
+            "name": self.__name,
+            "level": "" + str(self.__level),
+            "exp": "" + str(self.__exp),
+            "affinityOff": "" + str(self.__affinityOff),
+            "affinityDef": "" + str(self.__affinityDef),
+            "affinitySupp": "" + str(self.__affinitySupp),
+            "strength": "" + str(self.__strength),
+            "agility": "" + str(self.__agility),
+            "constitution": "" + str(self.__constitution),
+            "mana": "" + str(self.__mana),
+            "mastery": "" + str(self.__mastery),
+            "state": "" + str(self.__state),
+            "pos": "" + str(self.__pos)
+        }
+        headers = {'Content-Type': 'application/json'}
+        response = api.request("/knights", "POST", headers, payload)
+        k = response.json()
+        self.__id = k["_id"]
+
         return self
 
     def affinityOffHigh(self):

@@ -10,13 +10,13 @@ from Game.Model.enemy import Enemy
 from Game.Model.Knight import Knight
 
 
-# start_game()
+start_game()
 
 
 # name = input("Your name ?: ")
-name = "King Arthur"
-
-p = Player(None, name)
+# name = "King Arthur"
+#
+# p = Player(None, name)
 
 # k = Knight()
 

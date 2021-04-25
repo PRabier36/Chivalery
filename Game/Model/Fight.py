@@ -45,11 +45,14 @@ class Fight:
             mylist = [knight, knightInit]
             self.__attackSpeed.append(mylist)
         for aS in self.__attackSpeed:
-            self.__logs += (aS[0].get_name())
-            self.__logs += (aS[1])
+            self.__logs += str(aS[0].get_name())+"\n"
+            self.__logs += str(aS[1])+"\n"
 
-    def test_hp(self, unit):
-        unit.set_hp(int(unit.get_constitution() * 10))
+    def test_hp(self):
+        for knight in self.__player.get_knightList():
+            knight.set_hp(int(knight.get_constitution() * 10))
+        for enemy in self.__enemies:
+            enemy.set_hp(int(enemy.get_constitution() * 10))
 
     def attack(self, offensive_unit, target_zone, damage):
         if target_zone == "back":
@@ -67,16 +70,15 @@ class Fight:
         r = random.randint(0, (len(list_target) - 1))
         target = list_target[r]
         target.set_hp(target.get_hp() - damage)
-        self.__logs += (offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name() + "(" + str(target.get_hp()) + ")")
+        self.__logs += (offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name() + "(" + str(target.get_hp()) + ")")+"\n"
         if target.get_hp() <= 0:
             target.set_state("ko")
-            self.__logs += (target.get_name() + " is " + target.get_state())
+            self.__logs += (target.get_name() + " is " + target.get_state())+"\n"
             self.__map.remove_unit_from_pos(target, target_zone)
             target.set_pos("out")
 
     def turn_knight(self, Knight):
-        self.test_hp(Knight)
-        self.__logs += (Knight.get_name() + " hp " + str(Knight.get_hp()))
+        self.__logs += (Knight.get_name() + " hp " + str(Knight.get_hp()))+"\n"
 
         if Knight.get_pos() == "unknow":
             Knight.set_pos("front")
@@ -99,8 +101,7 @@ class Fight:
 
 
     def turn_enemy(self, Enemy):
-        self.test_hp(Enemy)
-        self.__logs += (Enemy.get_name() + " hp " + str(Enemy.get_hp()))
+        self.__logs += (Enemy.get_name() + " hp " + str(Enemy.get_hp()))+"\n"
 
         if Enemy.get_pos() == "unknow":
             Enemy.set_pos("e_front")
@@ -124,7 +125,7 @@ class Fight:
     def timer(self):
         for i in range(-3, self.__time, 1):
             os.system('cls')
-            self.__logs += (i)
+            print(i)
             self.verif_map_pos()
             if self.__state != "ongoing":
                 break
@@ -174,9 +175,8 @@ class Fight:
         return
 
     def Start(self):
-        t_init = threading.Thread(target=self.testInitiative)
-        t_init.start()
-        t_init.join()
+        self.testInitiative()
+        self.test_hp()
         t0 = threading.Thread(target=self.timer)
         t0.start()
 
@@ -225,6 +225,7 @@ class Fight:
               "     Knight:\n"
               "         " + str(xp) + "\n"
               "")
+
         input("Enter for continue...")
 
 

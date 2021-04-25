@@ -8,7 +8,7 @@ from Game.Model.Knight import Knight
 from Game.Model.KnightClasse import KnightClasse
 
 api = Api()
-api_url = "http://localhost:3000"
+api_url = "http://localhost:3001"
 
 
 class Player:
@@ -106,14 +106,18 @@ class Player:
 
     def create_new_knight(self):
         k = Knight()
-        address = api_url + "/players/" + self.__id + "/knights/" + k.get_id()
+        address = "/players/" + self.__id + "/knights/" + k.get_id()
         api.request(address, "PUT")
         self.__Knight_list.append(k)
         return k
 
     def revive(self):
+        self.print()
         for knight in self.__Knight_list:
-            knight.set_state("alive")
+            print(knight.get_state())
+            state = knight.get_state()
+            if state != "alive":
+                knight.set_state(str("alive"))
 
     def add_from_list(self, list):
         k_list = []
@@ -145,3 +149,44 @@ class Player:
         response = api.request("/players", "POST", headers, payload)
         p = response.json()
         self.__id = p["_id"]
+
+    def save(self):
+        payload = {
+            "name": self.__name,
+            "level": self.__level,
+            "rank": self.__rank,
+            "money": self.__money,
+            "xp": self.__xp,
+            "teachingBonus": self.__teachingBonus,
+        }
+        klist = []
+        for knight in self.__Knight_list:
+            k = {
+                "name": knight.get_name(),
+                "level": "" + str(knight.get_level()),
+                "exp": "" + str(knight.get_exp()),
+                "affinityOff": "" + str(knight.get_affinityOff()),
+                "affinityDef": "" + str(knight.get_affinityDef()),
+                "affinitySupp": "" + str(knight.get_affinitySupp()),
+                "strength": "" + str(knight.get_strength()),
+                "agility": "" + str(knight.get_agility()),
+                "constitution": "" + str(knight.get_constitution()),
+                "mana": "" + str(knight.get_mana()),
+                "mastery": "" + str(knight.get_mastery()),
+                "state": "" + str(knight.get_state()),
+                "pos": "" + str(knight.get_pos()),
+                "Knight_class": {
+                    "label": "Ecuyer",
+                    "speciality": 1,
+                    "modifierAttack": 1,
+                    "modifierDefense": 1,
+                    "modifierSpeciality": "1",
+                    "_id": "608592331e79e04388b0de2f"
+                }
+            }
+            klist.append(k)
+
+        payload["Knight_list"] = klist
+
+        headers = {'Content-Type': 'application/json'}
+        response = api.request("/players/"+self.__id, "PUT", headers, payload)
