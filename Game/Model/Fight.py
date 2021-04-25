@@ -23,6 +23,7 @@ class Fight:
         self.__state = "ongoing"
         self.__attackSpeed = []
         self.__map = Map()
+        self.__logs = ""
 
 
     def print(self):
@@ -44,8 +45,8 @@ class Fight:
             mylist = [knight, knightInit]
             self.__attackSpeed.append(mylist)
         for aS in self.__attackSpeed:
-            print(aS[0].get_name())
-            print(aS[1])
+            self.__logs += (aS[0].get_name())
+            self.__logs += (aS[1])
 
     def test_hp(self, unit):
         unit.set_hp(int(unit.get_constitution() * 10))
@@ -66,16 +67,16 @@ class Fight:
         r = random.randint(0, (len(list_target) - 1))
         target = list_target[r]
         target.set_hp(target.get_hp() - damage)
-        print(offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name() + "(" + str(target.get_hp()) + ")")
+        self.__logs += (offensive_unit.get_name() + " attack and do " + str(damage) + " damage to " + target.get_name() + "(" + str(target.get_hp()) + ")")
         if target.get_hp() <= 0:
             target.set_state("ko")
-            print(target.get_name() + " is " + target.get_state())
+            self.__logs += (target.get_name() + " is " + target.get_state())
             self.__map.remove_unit_from_pos(target, target_zone)
             target.set_pos("out")
 
     def turn_knight(self, Knight):
         self.test_hp(Knight)
-        print(Knight.get_name() + " hp " + str(Knight.get_hp()))
+        self.__logs += (Knight.get_name() + " hp " + str(Knight.get_hp()))
 
         if Knight.get_pos() == "unknow":
             Knight.set_pos("front")
@@ -99,7 +100,7 @@ class Fight:
 
     def turn_enemy(self, Enemy):
         self.test_hp(Enemy)
-        print(Enemy.get_name() + " hp " + str(Enemy.get_hp()))
+        self.__logs += (Enemy.get_name() + " hp " + str(Enemy.get_hp()))
 
         if Enemy.get_pos() == "unknow":
             Enemy.set_pos("e_front")
@@ -123,7 +124,7 @@ class Fight:
     def timer(self):
         for i in range(-3, self.__time, 1):
             os.system('cls')
-            print(i)
+            self.__logs += (i)
             self.verif_map_pos()
             if self.__state != "ongoing":
                 break
@@ -145,6 +146,7 @@ class Fight:
             if enemy.get_pos() == "front":
                 self.__map.add_e_front(enemy)
         self.__map.print()
+        print(self.__logs)
 
     def verifStateKnights(self):
         while self.__state == "ongoing":
@@ -211,9 +213,7 @@ class Fight:
         self.__player.revive()
         return
 
-    def victory(self):
-        gp = int(self.__gold)
-        xp = int(self.__xp)
+    def loot(self, gp, xp):
         self.__player.add_money(gp)
         self.__player.add_xp(xp/2)
         for knight in self.__player.get_knightList():
@@ -227,21 +227,16 @@ class Fight:
               "")
         input("Enter for continue...")
 
+
+    def victory(self):
+        gp = int(self.__gold)
+        xp = int(self.__xp)
+        self.loot(gp, xp)
+
     def draw(self):
         gp = int(self.__gold)
         xp = int(self.__xp)
-        self.__player.add_money(gp/2)
-        self.__player.add_xp(xp/4)
-        for knight in self.__player.get_knightList():
-            knight.addExp(xp)
-        print("Gains :\n"
-              "     Player:\n"
-              "         " + str(gp/2) + "\n"
-              "         " + str(xp/4) + "\n"
-              "     Knight:\n"
-              "         " + str(xp/2) + "\n"
-              "")
-        input("Enter for continue...")
+        self.loot(gp/2, xp/2)
 
     def defeat(self):
-        return
+        self.loot(0, 0)

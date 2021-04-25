@@ -237,16 +237,21 @@ class Knight(Unit):
         self.__state = "alive"
         self.__pos = "unknow"
 
-        payload = "{\r\n    \"name\": \"" + self.__name + "\",\r\n    \"level\": \"" + str(
-            self.__level) + "\",\r\n    \"exp\": \"" + str(self.__exp) + "\",\r\n    \"affinityOff\": \"" + str(
-            self.__affinityOff) + "\",\r\n    \"affinityDef\": \"" + str(
-            self.__affinityDef) + "\",\r\n    \"affinitySupp\": \"" + str(
-            self.__affinitySupp) + "\",\r\n    \"strength\": \"" + str(
-            self.__strength) + "\",\r\n    \"agility\": \"" + str(
-            self.__agility) + "\",\r\n    \"constitution\": \"" + str(
-            self.__constitution) + "\",\r\n    \"mana\": \"" + str(self.__mana) + "\",\r\n    \"mastery\": \"" + str(
-            self.__mastery) + "\",\r\n    \"state\": \"" + str(self.__state) + "\",\r\n    \"pos\": \"" + str(
-            self.__pos) + "\"\r\n}"
+        payload = "{" \
+                  "     \"name\": \"Sylvester " + self.__name + "\"," \
+                  "     \"level\": \"" + str(self.__level) + "\"," \
+                  "     \"exp\": \"" + str(self.__exp) + "\"," \
+                  "     \"affinityOff\": \"" + str(self.__affinityOff) + "\"," \
+                  "     \"affinityDef\": \"" + str(self.__affinityDef) + "\"," \
+                  "     \"affinitySupp\": \"" + str(self.__affinitySupp) + "\"," \
+                  "     \"strength\": \"" + str(self.__strength) + "\"," \
+                  "     \"agility\": \"" + str(self.__agility) + "\"," \
+                  "     \"constitution\": \"" + str(self.__constitution) + "\"," \
+                  "     \"mana\": \"" + str(self.__mana) + "\"," \
+                  "     \"mastery\": \"" + str(self.__mastery) + "\"," \
+                  "     \"state\": \"" + str(self.__state) + "\"," \
+                  "     \"pos\": \"" + str(self.__pos) + "t\"" \
+                  "} "
         headers = {}
         requests.request("POST", api_url + "/knights", headers=headers, data=payload)
         return self

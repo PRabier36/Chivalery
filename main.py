@@ -10,11 +10,25 @@ from Game.Model.enemy import Enemy
 from Game.Model.Knight import Knight
 
 
-start_game()
+# start_game()
+# name = input("Your name ?: ")
+name = "King Arthur"
+
+p = Player(None, name)
 
 # k = Knight()
+
+# k_class = k.get_classe()
 #
+# json.dumps(k_class)
+#
+# k.set_classe("")
+#
+# print(k)
+
 # print(json.dumps(k.__dict__))
+
+
 # Ks = [Knight() for i in range(1)]
 # Ks = [Knight() for i in range(5)]
 # for k in Ks:

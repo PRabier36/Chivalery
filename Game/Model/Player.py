@@ -1,8 +1,15 @@
-import requests
+import json
 
+import requests
+import simplejson as simplejson
+
+from Game.API.api import Api
 from Game.Model.Knight import Knight
 from Game.Model.KnightClasse import KnightClasse
+
+api = Api()
 api_url = "http://localhost:3000"
+
 
 class Player:
 
@@ -15,8 +22,8 @@ class Player:
         self.__xp = xp
         self.__teachingBonus = teachingBonus
         self.__Knight_list = kninghtList
-
-
+        if id is None:
+            self.createPlayer()
 
     # getter
     def get_id(self):
@@ -66,7 +73,6 @@ class Player:
     def set_teachingBonus(self, teachingBonus):
         self.__teachingBonus = teachingBonus
 
-
     def set_knightList(self, knigthList):
         self.__Knight_list = knigthList
 
@@ -77,7 +83,7 @@ class Player:
         self.__xp += xp;
 
     def print(self):
-        print("    "+self.__name)
+        print("    " + self.__name)
         print("    rank : " + str(self.__rank))
         print("    level : " + str(self.__level))
         print("    money : " + str(self.__money) + " Gold")
@@ -91,7 +97,7 @@ class Player:
             print("No knight")
         else:
             for knight in self.__Knight_list:
-                print(str(i)+":\n")
+                print(str(i) + ":\n")
                 knight.print()
                 i += 1
 
@@ -100,8 +106,8 @@ class Player:
 
     def create_new_knight(self):
         k = Knight()
-
-        requests.request("PUT", api_url+"/players/"+self.__id+"/knights/"+k.get_id())
+        address = api_url + "/players/" + self.__id + "/knights/" + k.get_id()
+        api.request(address, "PUT")
         self.__Knight_list.append(k)
         return k
 
@@ -112,13 +118,14 @@ class Player:
     def add_from_list(self, list):
         k_list = []
         for knight in list:
-            if len(knight) >1:
+            if len(knight) > 1:
                 k = Knight()
                 k.set_id = knight["_id"]
                 k.set_level = knight["level"]
                 k.set_exp = knight["exp"]
                 k.set_classe(KnightClasse(knight["Knight_class"]["_id"], knight["Knight_class"]["label"],
-                                          knight["Knight_class"]["speciality"], knight["Knight_class"]["modifierAttack"],
+                                          knight["Knight_class"]["speciality"],
+                                          knight["Knight_class"]["modifierAttack"],
                                           knight["Knight_class"]["modifierDefense"],
                                           knight["Knight_class"]["modifierSpeciality"]))
                 k.set_strength = knight["strength"]
@@ -131,3 +138,19 @@ class Player:
                 k_list.append(k)
         self.__Knight_list = k_list
 
+    def createPlayer(self):
+        payload = self.__dict__
+
+        # payload = json.dumps(data)
+        print(payload)
+        # payload = {'json_payload': data_json}
+
+        # payload = "{\"name\": \"Paul\",\"rank\": 1,\"level\": 1,\"money\": 45,\"xp\": 0,\"teachingBonus\": 0}"
+        headers = {'Content-Type': 'application/json'}
+
+        response = api.request("/players", "POST", headers, payload)
+
+        response = response.json()
+
+        # print("_id = " + response["_id"])
+        self.__id = response["_id"]
