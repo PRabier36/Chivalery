@@ -21,7 +21,7 @@ class Jeu:
 
         # noms des menus et commandes associées
         items = (
-            ('Nouvelle', application.GoToPlayerCreationMenu),
+            ('Nouvelle', application.startGui()),
             ('continuer', application.ContinueTheLast),
             ('charger', application.loadParts)
         )

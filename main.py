@@ -2,15 +2,10 @@
 import json
 
 import pygame
-# from Game.Menu.Application import *
-from Game.Model.GUI import start_game
-from Game.Model.Player import Player
-from Game.Model.Fight import Fight
-from Game.Model.enemy import Enemy
-from Game.Model.Knight import Knight
+from Game.Menu.Application import *
 
 
-start_game()
+
 
 # k = Knight()
 #
@@ -44,16 +39,15 @@ start_game()
 
 
 
-# pygame.init()
-#
-#
-# app = Application()
-# app.menu()
-#
-# clock = pygame.time.Clock()
-#
-# while app.statut:
-#     app.update()
-#     clock.tick(30)
-#
-# pygame.quit()
+pygame.init()
+
+app = Application()
+app.menu()
+
+clock = pygame.time.Clock()
+
+while app.statut:
+    app.update()
+    clock.tick(30)
+
+pygame.quit()

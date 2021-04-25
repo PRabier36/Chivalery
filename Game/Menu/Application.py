@@ -2,6 +2,8 @@ import pygame
 from ..Config.config import *
 from .Jeu import *
 from .Menu import *
+from ..Model.GUI import start_game
+
 
 class Application:
     """ Classe maîtresse gérant les différentes interfaces du jeu """
@@ -46,6 +48,9 @@ class Application:
         # Affichage du menu
         self._initialiser()
         self.ecran = Menu(self, self.groupeGlobal)
+
+    def startGui(self):
+        start_game()
 
     def jeu(self):
         # Affichage du jeu
