@@ -8,8 +8,6 @@ from Game.Menu.Application import *
 
 
 
-<<<<<<< HEAD
-=======
 # start_game()
 
 
@@ -17,7 +15,6 @@ from Game.Menu.Application import *
 # name = "King Arthur"
 #
 # p = Player(None, name)
->>>>>>> origin/ia_knight
 
 # k = Knight()
 
