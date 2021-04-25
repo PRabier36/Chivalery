@@ -139,18 +139,9 @@ class Player:
         self.__Knight_list = k_list
 
     def createPlayer(self):
-        payload = self.__dict__
-
-        # payload = json.dumps(data)
-        print(payload)
-        # payload = {'json_payload': data_json}
-
-        # payload = "{\"name\": \"Paul\",\"rank\": 1,\"level\": 1,\"money\": 45,\"xp\": 0,\"teachingBonus\": 0}"
+        payload = {"name": self.__name, "level": self.__level, "rank": self.__rank, "money": self.__money,
+                   "xp": self.__xp, "teachingBonus": self.__teachingBonus}
         headers = {'Content-Type': 'application/json'}
-
         response = api.request("/players", "POST", headers, payload)
-
-        response = response.json()
-
-        # print("_id = " + response["_id"])
-        self.__id = response["_id"]
+        p = response.json()
+        self.__id = p["_id"]
