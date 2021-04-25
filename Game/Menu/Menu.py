@@ -1,6 +1,4 @@
 import pygame
-import pygame_menu
-from pygame_menu import Menu
 from ..Config.config import *
 from ..Components.MenuButton import *
 from ..Components.CustomButton import *

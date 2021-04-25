@@ -1,5 +1,5 @@
 class KnightClasse:
-    def __init__(self, id, label, speciality, modifierAttack, modifierDefense, modifierSpeciality, listSkill):
+    def __init__(self, id=None, label=None, speciality=None, modifierAttack=None, modifierDefense=None, modifierSpeciality=None, listSkill=None):
         self.__id = id
         self.__label = label
         self.__speciality = speciality
@@ -61,3 +61,11 @@ class KnightClasse:
             "modifierAttack :", self.__modifierAttack, "\n",
             "modifierDefense :", self.__modifierDefense, "\n",
             "modifierSpeciality :", self.__modifierSpeciality, "\n")
+
+    def newKnight(self):
+        self.__label = "Ecuyer"
+        self.__speciality = 1
+        self.__modifierAttack = 1
+        self.__modifierDefense = 1
+        self.__modifierSpeciality = 1
+        self.__listSkill = []

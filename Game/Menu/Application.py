@@ -2,6 +2,8 @@ import pygame
 from ..Config.config import *
 from .Jeu import *
 from .Menu import *
+from ..Model.GUI import start_game
+
 
 class Application:
     """ Classe maîtresse gérant les différentes interfaces du jeu """
@@ -17,10 +19,7 @@ class Application:
         self.groupeGlobal = pygame.sprite.Group()
         self.statut = True
 
-    def GoToPlayerCreationMenu(self):
-        # création du joueur
-        self._initialiser()
-        self.ecran = PlayerMenu(Player(10, "jean-claude", 0, 0, 10, 0, 0, 0), self, self.groupeGlobal)
+
 
 
     def ContinueTheLast(self):
@@ -40,10 +39,18 @@ class Application:
         except AttributeError:
             pass
 
+    def GoToPlayerCreationMenu(self):
+        # création du joueur
+        self._initialiser()
+        self.ecran = PlayerMenu(self, self.groupeGlobal)
+
     def menu(self):
         # Affichage du menu
         self._initialiser()
         self.ecran = Menu(self, self.groupeGlobal)
+
+    def startGui(self):
+        start_game()
 
     def jeu(self):
         # Affichage du jeu

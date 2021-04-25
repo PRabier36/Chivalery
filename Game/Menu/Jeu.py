@@ -1,6 +1,4 @@
 import pygame
-import pygame_menu
-from pygame_menu import Menu
 from ..Config.config import *
 from ..Components.MenuButton import *
 from .PlayerMenu import *
@@ -21,7 +19,7 @@ class Jeu:
 
         # noms des menus et commandes associées
         items = (
-            ('Nouvelle', application.GoToPlayerCreationMenu),
+            ('Nouvelle', application.startGui),
             ('continuer', application.ContinueTheLast),
             ('charger', application.loadParts)
         )
