@@ -1,5 +1,7 @@
 ## Chivalery
 
 # Run app:
-    docker build . -t chivalry_dev:1
-    docker run --rm -it chivalry_dev:1
+    docker-compose up -d
+    pip freeze > requirements.txt
+    pip install -r requirements.txt
+    python ./main.py
